@@ -6,7 +6,7 @@ const fs = require('fs');
 
 class ProductManager {
     constructor() {
-        this.path = '';
+        this.path = 'products.json';
         this.products = [];
         this.productIdCounter = 1;
         this.loadProducts();
@@ -30,7 +30,7 @@ class ProductManager {
     }
 
     getProducts() {
-        return this.products.slice();
+        return this.products();
     }
 
     getProductById(id) {
