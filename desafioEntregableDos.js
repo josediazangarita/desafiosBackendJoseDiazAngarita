@@ -1,11 +1,15 @@
 //Script del desafío entregable dos del curso Backend de Coderhouse
+console.log("Segundo desafío entregable Backend de José Gregorio Díaz Angarita")
 
-console.log("Primer desafío entregable de José Gregorio Díaz Angarita")
+//Se importa el módulo de FuleSystem para manipular archivos
+const fs = require('fs');
 
 class ProductManager {
     constructor() {
+        this.path = '';
         this.products = [];
         this.productIdCounter = 1;
+        this.loadProducts();
     }
 
     addProduct(product) {
@@ -21,11 +25,12 @@ class ProductManager {
 
         product.id = this.productIdCounter++;
         this.products.push(product);
-        console.log("Se ha agregado un producto con éxito.");
+        return product.id;
+        //console.log("Se ha agregado un producto con éxito.");
     }
 
     getProducts() {
-        return this.products;
+        return this.products.slice();
     }
 
     getProductById(id) {
@@ -34,6 +39,24 @@ class ProductManager {
             console.log("Error: No se encuentra el producto con el ID proporcionado.");
         }
         return product;
+    }
+
+    loadProducts() {
+        try {
+            const data = fs.readFileSync(this.path, 'utf8');
+            this.products = JSON.parse(data);
+            this.productIdCounter = Math.max(...this.products.map(product => product.id), 0) + 1;
+        } catch (error) {
+            console.error('Error al cargar productos desde el archivo:', error.message);
+        }
+    }
+
+    updateProduct() {
+
+    }
+
+    deleteProduct() {
+
     }
 }
 
