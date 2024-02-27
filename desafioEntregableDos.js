@@ -51,6 +51,15 @@ class ProductManager {
         }
     }
 
+    saveProducts() {
+        try {
+            const data = JSON.stringify(this.products, null, 2);
+            fs.writeFileSync(this.path, data);
+        } catch (error) {
+            console.error('Error al guardar productos en el archivo:', error.message);
+        }
+    }
+
     updateProduct() {
 
     }
