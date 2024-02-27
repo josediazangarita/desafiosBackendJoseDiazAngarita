@@ -60,8 +60,13 @@ class ProductManager {
         }
     }
 
-    updateProduct() {
-
+    updateProduct(id, updatedFields) {
+        const index = this.products.findIndex(product => product.id === id);
+        if (index === -1) {
+            console.error("No se encuentra el producto con el ID señalado");
+        }
+        this.products[index] = { ...this.products[index], ...updatedFields };
+        this.saveProducts();
     }
 
     deleteProduct() {
