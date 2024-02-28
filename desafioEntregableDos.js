@@ -117,7 +117,7 @@ store.addProduct({
 
 console.log(("Obtener totalidad de productos:"), store.getProducts());
 
-/*//Test agregar un producto con campo faltante
+//Test agregar un producto con campo faltante
 store.addProduct({
     title: "Producto 4",
     description: "descripción del producto 4",
@@ -127,7 +127,7 @@ store.addProduct({
     stock: 400
 });
 
-//Test agregar un producto con código existente
+/*//Test agregar un producto con código existente
 store.addProduct({
     title: "Producto 5",
     description: "descripción del producto 5",
