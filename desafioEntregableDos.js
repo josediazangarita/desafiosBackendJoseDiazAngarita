@@ -25,12 +25,13 @@ class ProductManager {
         //Asignar ID al producto
         product.id = this.productIdCounter++;
         this.products.push(product);
+        this.saveProducts();
         return product.id;
         //console.log("Se ha agregado un producto con éxito.");
     }
     //Método para obtener todos los productos almacenados
     getProducts() {
-        return this.products();
+        return this.products;
     }
 
     //Método para obtener un producto almacenado por su ID
@@ -116,7 +117,7 @@ store.addProduct({
 
 console.log(("Obtener totalidad de productos:"), store.getProducts());
 
-//Test agregar un producto con campo faltante
+/*//Test agregar un producto con campo faltante
 store.addProduct({
     title: "Producto 4",
     description: "descripción del producto 4",
@@ -139,4 +140,4 @@ store.addProduct({
 //Obtener productos por su ID
 console.log(("Obtener producto por ID:"), store.getProductById(2));
 console.log(("Obtener producto por ID:"), store.getProductById(3));
-console.log(("Obtener producto por ID:"), store.getProductById(20));
+console.log(("Obtener producto por ID:"), store.getProductById(20)); */
