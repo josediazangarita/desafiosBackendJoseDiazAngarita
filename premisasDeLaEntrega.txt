@@ -1,0 +1,20 @@
+Consigna de la segunda entrega:
+    -Realizar una clase de nombre "ProductManager", el cual permitirá trabajar con múltiples productos. Éste debe poder agregar, consultar, modificar y eliminar un producto y manejarlo en persistencia de archivos (basado en entregable 1).
+
+Aspectos a incluir:
+
+    - La clase debe contar con una variable this.path, el cual se inicializará desde el constructor y debe recibir la ruta a trabajar desde el momento de generar la instancia.
+
+    - Debe guardar los objetos con el formato indicado en el desafío uno.
+
+    - Debe tener un método addProduct el cual debe recibir un objeto con el formato previamente mencionado, asignarle un id autoincrementable y guardarlo en un arreglo.
+
+    - Debe tener un método getProducts, el cual debe leer el archivo de productos y devolver todos los productos en formato arreglo.
+
+    - Debe tener un método getProductById, el cual debe recibir un id, y trae leer el archivo, debe buscar el producto con el id especificado y devolverlo en formato objeto.
+
+    - Debe tener un método updateProduct, el cual debe recibir el id del producto a actualizar, así también como el campo a actualizar, y debe actualizar el producto que contenga ese id en el archivo. No debe borrarse su id.
+
+    - Debe tener un método deleteProduct, el cual debe recibir un id y debe eliminar el producto que tenga ese id en el archivo.
+
+    - Proceso de testing.
