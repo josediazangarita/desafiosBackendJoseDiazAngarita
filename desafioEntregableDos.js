@@ -11,32 +11,33 @@ class ProductManager {
         this.productIdCounter = 1;
         this.loadProducts();
     }
-
+    //Método para agregar productos
     addProduct(product) {
         if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock) {
             console.log("Error: Está intentando ingresar un producto con campos faltantes, ingrese el campo o los campos faltantes y reinténtelo");
             return;
         }
-
+        //Verificar si el código de un producto ya existe
         if (this.products.some(p => p.code === product.code)) {
             console.log("Error: El código del producto que intenta ingresar ya existe, asígnele otro código.");
             return;
         }
-
+        //Asignar ID al producto
         product.id = this.productIdCounter++;
         this.products.push(product);
         return product.id;
         //console.log("Se ha agregado un producto con éxito.");
     }
-
+    //Método para obtener todos los productos almacenados
     getProducts() {
         return this.products();
     }
 
+    //Método para obtener un producto almacenado por su ID
     getProductById(id) {
         const product = this.products.find(p => p.id === id);
         if (!product) {
-            console.log("Error: No se encuentra el producto con el ID proporcionado.");
+            console.log("Error: No se encuentra el producto con el ID ingresado.");
         }
         return product;
     }
@@ -63,14 +64,19 @@ class ProductManager {
     updateProduct(id, updatedFields) {
         const index = this.products.findIndex(product => product.id === id);
         if (index === -1) {
-            console.error("No se encuentra el producto con el ID señalado");
+            console.error("No se encuentra el producto con el ID ingresado");
         }
         this.products[index] = { ...this.products[index], ...updatedFields };
         this.saveProducts();
     }
-
-    deleteProduct() {
-
+    //Método para eliminar producto
+    deleteProduct(id) {
+        const index = this.products.findIndex(product => product.id === id);
+        if (index === -1) {
+            console.log("No se encuentra el producto con el ID ingresado");
+        }
+        this.products.splice(index, 1);
+        this.saveProducts();
     }
 }
 
