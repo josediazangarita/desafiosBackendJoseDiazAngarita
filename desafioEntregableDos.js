@@ -1,5 +1,5 @@
 //Script del desafío entregable dos del curso Backend de Coderhouse
-console.log("Segundo desafío entregable Backend de José Gregorio Díaz Angarita\n")
+console.log("\nSegundo desafío entregable Backend de José Gregorio Díaz Angarita\n")
 
 //Se importa el módulo de FuleSystem para manipular archivos
 const fs = require('fs');
@@ -88,7 +88,7 @@ class ProductManager {
     deleteProduct(id) {
         const index = this.products.findIndex(product => product.id === id);
         if (index === -1) {
-            console.log("No se encuentra el producto con el ID ingresado.\n");
+            console.log("No se encuentra el producto con el ID ingresado por lo que no puede ser eliminado.\n");
             return;
         }
         this.products.splice(index, 1);
@@ -157,6 +157,8 @@ store.addProduct({
 //Obtener productos por su ID
 store.getProductById(2);
 store.getProductById(3);
+
+//Obtener producto con un ID inexistente (error)
 store.getProductById(20);
 
 //Actualizar campo de un producto
@@ -168,5 +170,5 @@ store.updateProduct(2, { id: 10 });
 //Test de eliminación de un producto por id
 store.deleteProduct(3);
 
-//Test de eliminación de un producto inexistente
+//Test de eliminación de un producto cin id inexistente (error)
 store.deleteProduct(15);
