@@ -1,5 +1,5 @@
 //Script del desafío entregable dos del curso Backend de Coderhouse
-console.log("Segundo desafío entregable Backend de José Gregorio Díaz Angarita")
+console.log("Segundo desafío entregable Backend de José Gregorio Díaz Angarita\n")
 
 //Se importa el módulo de FuleSystem para manipular archivos
 const fs = require('fs');
@@ -14,23 +14,25 @@ class ProductManager {
     //Método para agregar productos
     addProduct(product) {
         if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock) {
-            console.log("Error: Está intentando ingresar un producto con campos faltantes, ingrese el campo o los campos faltantes y reinténtelo");
+            console.log("Error: Está intentando ingresar un producto con campos faltantes, ingrese el campo o los campos faltantes y reinténtelo.\n");
             return;
         }
         //Verificar si el código de un producto ya existe
         if (this.products.some(p => p.code === product.code)) {
-            console.log("Error: El código del producto que intenta ingresar ya existe, asígnele otro código.");
+            console.log("Error: El código del producto que intenta ingresar ya existe, asígnele otro código.\n");
             return;
         }
         //Asignar ID al producto
         product.id = this.productIdCounter++;
         this.products.push(product);
         this.saveProducts();
+        console.log(`Se ha agregado un producto con ID ${product.id} correctamente.\n`);
         return product.id;
-        //console.log("Se ha agregado un producto con éxito.");
     }
     //Método para obtener todos los productos almacenados
     getProducts() {
+        console.log("Lista de todos los productos:", this.products);
+        console.log('\n');
         return this.products;
     }
 
@@ -38,12 +40,15 @@ class ProductManager {
     getProductById(id) {
         const product = this.products.find(p => p.id === id);
         if (!product) {
-            console.log("Error: No se encuentra el producto con el ID ingresado.");
+            console.log(`Error: No se encuentra el producto con el ID ${id}.\n`);
+        } else {
+            console.log(`El producto con ID ${id} es el siguiente:`, product);
+            console.log('\n');
         }
         return product;
     }
 
-    loadProducts() {
+    async loadProducts() {
         try {
             const data = fs.readFileSync(this.path, 'utf8');
             this.products = JSON.parse(data);
@@ -53,7 +58,7 @@ class ProductManager {
         }
     }
 
-    saveProducts() {
+    async saveProducts() {
         try {
             const data = JSON.stringify(this.products, null, 2);
             fs.writeFileSync(this.path, data);
@@ -65,19 +70,30 @@ class ProductManager {
     updateProduct(id, updatedFields) {
         const index = this.products.findIndex(product => product.id === id);
         if (index === -1) {
-            console.error("No se encuentra el producto con el ID ingresado");
+            console.error(`No se encuentra el producto con el ID ${id} ingresado\n`);
+            return;
         }
+        //Verificar si el campo id no sea modificado y corresponda con el inicial
+        if ('id' in updatedFields && updatedFields.id !== id) {
+            console.error(`No se puede modificar el ID del producto con ID ${id}\n`);
+            return;
+        }
+        //Actualizar los campos excepto el id
         this.products[index] = { ...this.products[index], ...updatedFields };
         this.saveProducts();
+        console.log(`Se actualizó el producto con ID ${id}\n`);
+        return id;
     }
     //Método para eliminar producto
     deleteProduct(id) {
         const index = this.products.findIndex(product => product.id === id);
         if (index === -1) {
-            console.log("No se encuentra el producto con el ID ingresado");
+            console.log("No se encuentra el producto con el ID ingresado.\n");
+            return;
         }
         this.products.splice(index, 1);
         this.saveProducts();
+        console.log(`El producto con ID ${id} fue eliminado correctamente.\n`)
     }
 }
 
@@ -115,7 +131,8 @@ store.addProduct({
     stock: 300
 });
 
-console.log(("Obtener totalidad de productos:"), store.getProducts());
+//Obtener la lista de todos los productos
+store.getProducts();
 
 //Test agregar un producto con campo faltante
 store.addProduct({
@@ -127,7 +144,7 @@ store.addProduct({
     stock: 400
 });
 
-/*//Test agregar un producto con código existente
+//Test agregar un producto con código existente
 store.addProduct({
     title: "Producto 5",
     description: "descripción del producto 5",
@@ -138,6 +155,18 @@ store.addProduct({
 });
 
 //Obtener productos por su ID
-console.log(("Obtener producto por ID:"), store.getProductById(2));
-console.log(("Obtener producto por ID:"), store.getProductById(3));
-console.log(("Obtener producto por ID:"), store.getProductById(20)); */
+store.getProductById(2);
+store.getProductById(3);
+store.getProductById(20);
+
+//Actualizar campo de un producto
+store.updateProduct(2, { price: 1000 });
+
+//Error al intentar cambiar el campo id de un producto
+store.updateProduct(2, { id: 10 });
+
+//Test de eliminación de un producto por id
+store.deleteProduct(3);
+
+//Test de eliminación de un producto inexistente
+store.deleteProduct(15);
